@@ -97,3 +97,9 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+Client/Builds
+Client/Library
+Client/Temp
+Client/obj
+Client/UserSettings
+Server/EG-ShooterServer/.github
