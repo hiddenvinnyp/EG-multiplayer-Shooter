@@ -77,7 +77,7 @@ public class Controller : MonoBehaviour
 
     private void SendMove()
     {
-        _player.GetMoveInfo(out Vector3 position, out Vector3 velocity, out float rotateX, out float rotateY);
+        _player.GetMoveInfo(out Vector3 position, out Vector3 velocity, out float rotateX, out float rotateY, out bool isCrouch);
         Dictionary<string, object> data = new Dictionary<string, object>()
         {
             {"pX", position.x }, 
@@ -87,7 +87,8 @@ public class Controller : MonoBehaviour
             {"vY", velocity.y },
             {"vZ", velocity.z },
             {"rX", rotateX },
-            {"rY", rotateY }
+            {"rY", rotateY },
+            {"crouch", isCrouch }
         };
         _multiplayerManager.SendMessage("move", data);
     }

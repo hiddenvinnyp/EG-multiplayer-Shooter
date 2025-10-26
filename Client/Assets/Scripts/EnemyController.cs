@@ -79,6 +79,9 @@ public class EnemyController : MonoBehaviour
                 case "rY":
                     _character.SetRotateY((float)dataChange.Value);
                     break;
+                case "crouch":
+                    _character.Crouch((bool)dataChange.Value);
+                    break;
                 default:
                     Debug.LogWarning("Не обработалось поле " + dataChange.Field.ToString());
                     break;

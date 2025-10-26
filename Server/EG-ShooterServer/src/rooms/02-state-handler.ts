@@ -2,6 +2,9 @@ import { Room, Client } from "colyseus";
 import { Schema, type, MapSchema } from "@colyseus/schema";
 
 export class Player extends Schema {
+    @type("boolean")
+    crouch = false;
+
     @type("number")
     speed = 0;
 
@@ -57,6 +60,7 @@ export class State extends Schema {
         player.vZ = data.vZ;
         player.rX = data.rX;
         player.rY = data.rY;
+        player.crouch = data.crouch;
     }
 }
 

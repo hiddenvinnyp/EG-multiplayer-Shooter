@@ -4,8 +4,10 @@ public class CharacterAnimation : MonoBehaviour
 {
     private const string Grounded = "Grounded";
     private const string Speed = "Speed";
+    private const string IsCrouch = "IsCrouch";
 
     [SerializeField] private Animator _animator;
+    [SerializeField] private Animator _animatorBody;
     [SerializeField] private CheckFly _checkFly;
     [SerializeField] private Character _character;
 
@@ -17,5 +19,6 @@ public class CharacterAnimation : MonoBehaviour
 
         _animator.SetFloat(Speed, speed * sign);
         _animator.SetBool(Grounded, _checkFly.IsFly == false);
+        _animatorBody.SetBool(IsCrouch, _character.IsCrouch);
     }
 }

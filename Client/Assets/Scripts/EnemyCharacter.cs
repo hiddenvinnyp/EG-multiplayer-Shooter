@@ -10,7 +10,9 @@ public class EnemyCharacter : Character
 
     private void Start()
     {
-        targetPosition = transform.position;    
+        targetPosition = transform.position;
+        _colliderCenterStand = _collider.center;
+        _colliderHeightStand = _collider.height;
     }
 
     private void Update()
@@ -50,4 +52,19 @@ public class EnemyCharacter : Character
     {
         transform.localEulerAngles = new Vector3 (0, value, 0);
     }
+
+    /*public void SetCrouch(bool isCrouch)
+    {
+        if (IsCrouch == isCrouch) return;
+        if (isCrouch)
+        {
+            _collider.center = _colliderCenterCrouch;
+            _collider.height = _colliderHeightCrouch;
+        }
+        else
+        {
+            _collider.center = _colliderCenterStand;
+            _collider.height = _colliderHeightStand;
+        }
+    }*/
 }

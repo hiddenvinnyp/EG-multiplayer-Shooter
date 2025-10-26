@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerCharacter : Character
 {
     [SerializeField] private Rigidbody _rigidbody;
+    //[SerializeField] private CapsuleCollider _collider;
     [SerializeField] private Transform _head;
     [SerializeField] private Transform _cameraPoint;
     [SerializeField] private float _minHeadAngle = -90f;
@@ -16,8 +17,11 @@ public class PlayerCharacter : Character
     private float _rotateY;
     private float _currentRotateX;
     private float _jumpTime;
-
-    public bool IsCrouch { get; private set; } = false;
+    
+    /*[SerializeField] private Vector3 _colliderCenterCrouch = new Vector3(0, .6f, 0);
+    [SerializeField] private float _colliderHeightCrouch = 1.2f;
+    private Vector3 _colliderCenterStand;
+    private float _colliderHeightStand;   */ 
 
     public void SetInput(float h, float v, float rotateY)
     {
@@ -26,13 +30,15 @@ public class PlayerCharacter : Character
         _rotateY += rotateY;
     }
 
-    public void GetMoveInfo(out Vector3 position, out Vector3 velocity, out float rotateX, out float rotateY)
+    public void GetMoveInfo(out Vector3 position, out Vector3 velocity, out float rotateX, out float rotateY, out bool isCrouch)
     {
         position = transform.position;
         velocity = _rigidbody.linearVelocity;
 
         rotateX = _head.localEulerAngles.x;
         rotateY = transform.eulerAngles.y;
+
+        isCrouch = IsCrouch;
     }
 
     public void RotateX(float value)
@@ -47,15 +53,25 @@ public class PlayerCharacter : Character
         if (Time.time - _jumpTime < _jumpDelay) return;
         _jumpTime = Time.time;
         _rigidbody.AddForce(0, _jumpForce, 0, ForceMode.VelocityChange);
-        //_rigidbody.AddForceAtPosition(new Vector3(0, _jumpForce, 0), Vector3.up, ForceMode.Impulse);
     }
-    public void Crouch(bool isCrouch)
+
+    /*public void Crouch(bool isCrouch)
     {
         if (IsCrouch == isCrouch) return;
 
-        IsCrouch = isCrouch;
+        if (isCrouch)
+        {
+            _collider.center = _colliderCenterCrouch;
+            _collider.height = _colliderHeightCrouch;
+        }
+        else
+        {
+            _collider.center = _colliderCenterStand;
+            _collider.height = _colliderHeightStand;
+        }
 
-    }
+        IsCrouch = isCrouch;
+    }*/
 
     private void Start()
     {
@@ -63,6 +79,9 @@ public class PlayerCharacter : Character
         camera.parent = _cameraPoint;        
         camera.localPosition = Vector3.zero;
         camera.localRotation = Quaternion.identity;
+
+        _colliderCenterStand = _collider.center;
+        _colliderHeightStand = _collider.height;
     }
 
     void FixedUpdate()
@@ -84,18 +103,4 @@ public class PlayerCharacter : Character
         _rigidbody.angularVelocity = new Vector3(0, _rotateY, 0);
         _rotateY = 0;
     }
-
-    /*private void OnCollisionStay(Collision collision)
-    {
-        var contactPoints = collision.contacts;
-        for (int i = 0; i < contactPoints.Length; i++)
-        {
-            if (contactPoints[i].normal.y > .45f) _isFly = false;
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        _isFly = true;
-    }*/
 }
