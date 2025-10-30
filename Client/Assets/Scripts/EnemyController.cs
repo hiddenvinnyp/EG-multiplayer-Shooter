@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    [SerializeField] float _clampPing = 0.1f;
     [SerializeField] private EnemyCharacter _character;
     [SerializeField] private EnemyGun _gun;
     private List<float> _receiveTimeInterval = new List<float> { 0, 0, 0, 0, 0 };
@@ -95,6 +96,7 @@ public class EnemyController : MonoBehaviour
         float interval = Time.time - _lastReceiveTime;
         _lastReceiveTime = Time.time;
 
+        if (interval > _clampPing) interval = _clampPing; 
         _receiveTimeInterval.Add(interval);
         _receiveTimeInterval.RemoveAt(0);
     }

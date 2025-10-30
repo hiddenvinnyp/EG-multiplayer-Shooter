@@ -15,6 +15,7 @@ public abstract class Character : MonoBehaviour
     public void Crouch(bool isCrouch)
     {
         if (IsCrouch == isCrouch) return;
+        IsCrouch = isCrouch;
 
         if (isCrouch)
         {
@@ -26,7 +27,5 @@ public abstract class Character : MonoBehaviour
             _collider.center = _colliderCenterStand;
             _collider.height = _colliderHeightStand;
         }
-
-        IsCrouch = isCrouch;
     }
 }

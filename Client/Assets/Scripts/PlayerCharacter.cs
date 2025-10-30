@@ -4,7 +4,6 @@ using UnityEngine;
 public class PlayerCharacter : Character
 {
     [SerializeField] private Rigidbody _rigidbody;
-    //[SerializeField] private CapsuleCollider _collider;
     [SerializeField] private Transform _head;
     [SerializeField] private Transform _cameraPoint;
     [SerializeField] private float _minHeadAngle = -90f;
@@ -30,14 +29,17 @@ public class PlayerCharacter : Character
         _rotateY += rotateY;
     }
 
-    public void GetMoveInfo(out Vector3 position, out Vector3 velocity, out float rotateX, out float rotateY, out bool isCrouch)
+    public void GetMoveInfo(out Vector3 position, out Vector3 velocity, out float rotateX, out float rotateY)
     {
         position = transform.position;
         velocity = _rigidbody.linearVelocity;
 
         rotateX = _head.localEulerAngles.x;
         rotateY = transform.eulerAngles.y;
+    }
 
+    public void GetCrouchInfo(out bool isCrouch)
+    {
         isCrouch = IsCrouch;
     }
 
@@ -54,24 +56,6 @@ public class PlayerCharacter : Character
         _jumpTime = Time.time;
         _rigidbody.AddForce(0, _jumpForce, 0, ForceMode.VelocityChange);
     }
-
-    /*public void Crouch(bool isCrouch)
-    {
-        if (IsCrouch == isCrouch) return;
-
-        if (isCrouch)
-        {
-            _collider.center = _colliderCenterCrouch;
-            _collider.height = _colliderHeightCrouch;
-        }
-        else
-        {
-            _collider.center = _colliderCenterStand;
-            _collider.height = _colliderHeightStand;
-        }
-
-        IsCrouch = isCrouch;
-    }*/
 
     private void Start()
     {

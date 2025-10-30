@@ -60,7 +60,10 @@ export class State extends Schema {
         player.vZ = data.vZ;
         player.rX = data.rX;
         player.rY = data.rY;
-        player.crouch = data.crouch;
+    }
+
+    crouchPlayer (sessionId: string, data: any) {
+        this.players.get(sessionId).crouch = data.crouch;
     }
 }
 
@@ -75,6 +78,10 @@ export class StateHandlerRoom extends Room<State> {
         this.onMessage("move", (client, data) => {
             //console.log("StateHandlerRoom received message from", client.sessionId, ":", data);
             this.state.movePlayer(client.sessionId, data);
+        });
+
+        this.onMessage("crouch", (client, data) => {
+            this.state.crouchPlayer(client.sessionId, data);
         });
 
         this.onMessage("shoot", (client, data) => {

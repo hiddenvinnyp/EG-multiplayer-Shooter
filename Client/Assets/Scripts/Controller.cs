@@ -61,8 +61,17 @@ public class Controller : MonoBehaviour
         _player.RotateX(-_lookAmt.y * _mouseSensetivity);
 
         if (_jump.WasPressedThisFrame()) _player.Jump();
-        if (_crouch.IsPressed()) _player.Crouch(true);
-        if (_crouch.WasReleasedThisFrame()) _player.Crouch(false);
+        if (_crouch.IsPressed()) 
+        { 
+            _player.Crouch(true);
+            SendCrouch();
+        }
+
+        if (_crouch.WasReleasedThisFrame())
+        { 
+            _player.Crouch(false); 
+            SendCrouch();
+        }
         if (_attack.WasPressedThisFrame() && _gun.TryShoot(out ShootInfo shootInfo)) SendShoot(ref shootInfo);
 
         SendMove();
@@ -77,7 +86,7 @@ public class Controller : MonoBehaviour
 
     private void SendMove()
     {
-        _player.GetMoveInfo(out Vector3 position, out Vector3 velocity, out float rotateX, out float rotateY, out bool isCrouch);
+        _player.GetMoveInfo(out Vector3 position, out Vector3 velocity, out float rotateX, out float rotateY);
         Dictionary<string, object> data = new Dictionary<string, object>()
         {
             {"pX", position.x }, 
@@ -87,10 +96,19 @@ public class Controller : MonoBehaviour
             {"vY", velocity.y },
             {"vZ", velocity.z },
             {"rX", rotateX },
-            {"rY", rotateY },
-            {"crouch", isCrouch }
+            {"rY", rotateY }
         };
         _multiplayerManager.SendMessage("move", data);
+    }
+
+    private void SendCrouch()
+    {
+        _player.GetCrouchInfo(out bool isCrouch);
+        Dictionary<string, object> data = new Dictionary<string, object>()
+        {
+            {"crouch", isCrouch }
+        };
+        _multiplayerManager.SendMessage("crouch", data);
     }
 }
 
