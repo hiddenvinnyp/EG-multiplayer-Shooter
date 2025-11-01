@@ -3,6 +3,7 @@ using UnityEngine;
 public abstract class Character : MonoBehaviour
 {
     [field: SerializeField] public float speed { get; protected set; } = 2f;
+    [field: SerializeField] public int maxHealth { get; protected set; } = 100;
     public Vector3 velocity { get; protected set; }
 
     [SerializeField] protected CapsuleCollider _collider;

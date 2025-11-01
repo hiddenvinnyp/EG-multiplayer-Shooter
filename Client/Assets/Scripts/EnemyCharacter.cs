@@ -1,12 +1,16 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class EnemyCharacter : Character
 {
+    private string _sessionID;
+
+    [SerializeField] private Health _health;
     [SerializeField] private Transform _head;
     public Vector3 targetPosition { get; private set; } = Vector3.zero;
-    private float _velocityMagnitude = 0f;
-
-
+    private float _velocityMagnitude = 0f;    
 
     private void Start()
     {
@@ -28,9 +32,29 @@ public class EnemyCharacter : Character
         }        
     }
 
-    public void SetPosition(Vector3 position)
+    public void Init(string sessionID)
     {
-        transform.position = position;
+        _sessionID = sessionID;
+    }
+
+    public void ApplyDamage(int damage)
+    {
+        _health.ApplyDamage(damage);
+
+        Dictionary<string, object> data = new Dictionary<string, object>()
+        {
+            { "id", _sessionID },
+            {"value", damage}
+        };
+
+        MultiplayerManager.Instance.SendMessage("damage", data);
+    }
+
+    public void SetMaxHP(int value) 
+    { 
+        maxHealth = value; 
+        _health.SetMax(value);
+        _health.SetCurrent(value);
     }
 
     public void SetSpeed(float value) => speed = value;
@@ -53,18 +77,8 @@ public class EnemyCharacter : Character
         transform.localEulerAngles = new Vector3 (0, value, 0);
     }
 
-    /*public void SetCrouch(bool isCrouch)
+    internal void RestoreHP(int newValue)
     {
-        if (IsCrouch == isCrouch) return;
-        if (isCrouch)
-        {
-            _collider.center = _colliderCenterCrouch;
-            _collider.height = _colliderHeightCrouch;
-        }
-        else
-        {
-            _collider.center = _colliderCenterStand;
-            _collider.height = _colliderHeightStand;
-        }
-    }*/
+        _health.SetCurrent(newValue);
+    }
 }

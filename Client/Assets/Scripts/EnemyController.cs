@@ -25,10 +25,13 @@ public class EnemyController : MonoBehaviour
     private float _lastReceiveTime = 0f;
     private Player _player;
 
-    public void Init(Player player)
+    public void Init(string key, Player player)
     {
+        _character.Init(key);
+
         _player = player;
         _character.SetSpeed(player.speed);
+        _character.SetMaxHP(player.maxHP);
         player.OnChange += OnChange;
     }
 
@@ -45,6 +48,7 @@ public class EnemyController : MonoBehaviour
         _player.OnChange -= OnChange;
         Destroy(gameObject);
     }
+
     internal void OnChange(List<DataChange> changes)
     {
         SaveReceiveTime();
@@ -82,6 +86,13 @@ public class EnemyController : MonoBehaviour
                     break;
                 case "crouch":
                     _character.Crouch((bool)dataChange.Value);
+                    break;
+                case "currentHP":
+                    if ((sbyte)dataChange.Value > (sbyte)dataChange.PreviousValue)
+                        _character.RestoreHP((sbyte)dataChange.Value);
+                    break;
+                case "loss":
+                    MultiplayerManager.Instance._lossCounter.SetEnemyLoss((byte)dataChange.Value);
                     break;
                 default:
                     Debug.LogWarning("Не обработалось поле " + dataChange.Field.ToString());
