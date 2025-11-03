@@ -8,7 +8,7 @@ public class Controller : MonoBehaviour
     [SerializeField] private float _restartDelay = 3f;
     [SerializeField] private PlayerCharacter _player;
     [SerializeField] private PlayerGun _gun;
-    [SerializeField] private float _mouseSensetivity = 2f;
+    [field: SerializeField] public float _mouseSensetivity = 2f;
     private MultiplayerManager _multiplayerManager;
     private bool _hold = false;
 
@@ -21,11 +21,6 @@ public class Controller : MonoBehaviour
     private InputAction _crouch;
     private Vector2 _moveAmt;
     private Vector2 _lookAmt;
-    private InputAction _scrollWeapon;
-    private InputAction _selectWeapon1;
-    private InputAction _selectWeapon2;
-    private InputAction _selectWeapon3;
-    private InputAction _selectWeapon4;
 
     private void OnEnable()
     {
@@ -44,12 +39,8 @@ public class Controller : MonoBehaviour
         _jump = InputSystem.actions.FindAction("Jump");
         _attack = InputSystem.actions.FindAction("Attack");
         _crouch = InputSystem.actions.FindAction("Crouch");
-        _scrollWeapon = InputSystem.actions.FindAction("ScrollWeapon");
-        _selectWeapon1 = InputSystem.actions.FindAction("SelectWeapon1");
-        _selectWeapon2 = InputSystem.actions.FindAction("SelectWeapon2");
-        _selectWeapon3 = InputSystem.actions.FindAction("SelectWeapon3");
-        _selectWeapon4 = InputSystem.actions.FindAction("SelectWeapon4");
     }
+
     private void Start()
     {
         _multiplayerManager = MultiplayerManager.Instance;
@@ -114,6 +105,18 @@ public class Controller : MonoBehaviour
             {"crouch", isCrouch }
         };
         _multiplayerManager.SendMessage("crouch", data);
+    }
+
+    public void EquipWeapon(GameObject gunModel, int slot)
+    {
+        gunModel.SetActive(true);
+
+        Dictionary<string, object> data = new Dictionary<string, object>()
+        {
+            {"weapon", slot }
+        };
+
+        _multiplayerManager.SendMessage("weaponChange", data);
     }
 
     public void Restart(string jsonRestartInfo)

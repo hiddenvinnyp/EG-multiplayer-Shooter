@@ -1,8 +1,6 @@
 using Colyseus.Schema;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 public class PlayerCharacter : Character
 {
@@ -20,11 +18,6 @@ public class PlayerCharacter : Character
     private float _rotateY;
     private float _currentRotateX;
     private float _jumpTime;
-    
-    /*[SerializeField] private Vector3 _colliderCenterCrouch = new Vector3(0, .6f, 0);
-    [SerializeField] private float _colliderHeightCrouch = 1.2f;
-    private Vector3 _colliderCenterStand;
-    private float _colliderHeightStand;   */ 
 
     public void SetInput(float h, float v, float rotateY)
     {

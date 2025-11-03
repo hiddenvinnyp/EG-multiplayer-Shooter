@@ -91,7 +91,7 @@
                     "name": "ScrollWeapon",
                     "type": "PassThrough",
                     "id": "17559b71-28fb-4a90-9e99-c4ffc826cf89",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -522,7 +522,7 @@
                 {
                     "name": "",
                     "id": "8245cae7-f724-4103-952c-6d83065a410e",
-                    "path": "<Mouse>/scroll",
+                    "path": "<Mouse>/scroll/y",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",

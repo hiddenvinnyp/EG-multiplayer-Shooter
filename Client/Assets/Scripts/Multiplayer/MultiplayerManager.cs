@@ -35,7 +35,7 @@ public class MultiplayerManager : ColyseusManager<MultiplayerManager>
         Dictionary<string, object> data = new Dictionary<string, object>()
         {
             {"speed", _player.speed},
-            {"hp", _player.maxHealth }
+            {"hp", _player.maxHealth}
         };
 
         _room = await Instance.client.JoinOrCreate<State>("state_handler", data);

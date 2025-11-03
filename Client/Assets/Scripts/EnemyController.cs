@@ -46,7 +46,7 @@ public class EnemyController : MonoBehaviour
     public void Destroy()
     {
         _player.OnChange -= OnChange;
-        Destroy(gameObject);
+        if(gameObject) Destroy(gameObject);
     }
 
     internal void OnChange(List<DataChange> changes)
@@ -93,6 +93,9 @@ public class EnemyController : MonoBehaviour
                     break;
                 case "loss":
                     MultiplayerManager.Instance._lossCounter.SetEnemyLoss((byte)dataChange.Value);
+                    break;
+                case "weapon":
+                    _character.ChangeWeapon((sbyte)dataChange.Value);
                     break;
                 default:
                     Debug.LogWarning("Не обработалось поле " + dataChange.Field.ToString());

@@ -9,6 +9,7 @@ public class EnemyCharacter : Character
 
     [SerializeField] private Health _health;
     [SerializeField] private Transform _head;
+    [SerializeField] private WeaponList _weaponList;
     public Vector3 targetPosition { get; private set; } = Vector3.zero;
     private float _velocityMagnitude = 0f;    
 
@@ -77,8 +78,13 @@ public class EnemyCharacter : Character
         transform.localEulerAngles = new Vector3 (0, value, 0);
     }
 
-    internal void RestoreHP(int newValue)
+    public void RestoreHP(int newValue)
     {
         _health.SetCurrent(newValue);
+    }
+
+    public void ChangeWeapon(sbyte value)
+    {
+        _weaponList.SetActive(value);
     }
 }

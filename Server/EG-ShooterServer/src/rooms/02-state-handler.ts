@@ -2,6 +2,9 @@ import { Room, Client } from "colyseus";
 import { Schema, type, MapSchema } from "@colyseus/schema";
 
 export class Player extends Schema {
+    @type("int8")
+    weapon = 0;
+
     @type("uint8")
     loss = 0;
 
@@ -53,7 +56,7 @@ export class State extends Schema {
         player.maxHP = data.hp;
         player.currentHP = data.hp;
         player.speed = data.speed;
-
+        
         this.players.set(sessionId, player);
     }
 
@@ -75,6 +78,10 @@ export class State extends Schema {
 
     crouchPlayer (sessionId: string, data: any) {
         this.players.get(sessionId).crouch = data.crouch;
+    }
+
+    changeWeapon(sessionId: string, data: any) {
+        this.players.get(sessionId).weapon = data.weapon;
     }
 }
 
@@ -98,6 +105,10 @@ export class StateHandlerRoom extends Room<State> {
         this.onMessage("shoot", (client, data) => {
             this.broadcast("Shoot", data, {except: client});
         });
+
+        this.onMessage("weaponChange", (client, data) => {
+            this.state.changeWeapon(client.sessionId, data);
+        })
 
         this.onMessage("damage", (client, data) => {
             const clientId = data.id;
