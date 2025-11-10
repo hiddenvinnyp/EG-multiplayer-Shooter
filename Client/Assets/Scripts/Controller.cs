@@ -11,6 +11,7 @@ public class Controller : MonoBehaviour
     [field: SerializeField] public float _mouseSensetivity = 2f;
     private MultiplayerManager _multiplayerManager;
     private bool _hold = false;
+    private bool _hideCursor;
 
     public InputActionAsset InputActions;
 
@@ -19,6 +20,7 @@ public class Controller : MonoBehaviour
     private InputAction _jump;
     private InputAction _attack;
     private InputAction _crouch;
+    private InputAction _lock;
     private Vector2 _moveAmt;
     private Vector2 _lookAmt;
 
@@ -39,22 +41,34 @@ public class Controller : MonoBehaviour
         _jump = InputSystem.actions.FindAction("Jump");
         _attack = InputSystem.actions.FindAction("Attack");
         _crouch = InputSystem.actions.FindAction("Crouch");
+        _lock = InputSystem.actions.FindAction("Lock");
     }
 
     private void Start()
     {
         _multiplayerManager = MultiplayerManager.Instance;
+        _hideCursor = true;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
     {
+        if (_lock.WasPressedThisFrame())
+        {
+            _hideCursor = !_hideCursor;
+            Cursor.lockState = _hideCursor ? CursorLockMode.Locked : CursorLockMode.None;
+        }
+
         if (_hold) return;
         
         _moveAmt = _move.ReadValue<Vector2>();
-        _lookAmt = _look.ReadValue<Vector2>();
-
         _player.SetInput(_moveAmt.x, _moveAmt.y, _lookAmt.x * _mouseSensetivity);
-        _player.RotateX(-_lookAmt.y * _mouseSensetivity);
+
+        if (_hideCursor)
+        {
+            _lookAmt = _look.ReadValue<Vector2>();
+            _player.RotateX(-_lookAmt.y * _mouseSensetivity);
+        }
 
         if (_jump.WasPressedThisFrame()) _player.Jump();
         if (_crouch.IsPressed()) 
@@ -119,23 +133,26 @@ public class Controller : MonoBehaviour
         _multiplayerManager.SendMessage("weaponChange", data);
     }
 
-    public void Restart(string jsonRestartInfo)
+    public void Restart(int spawnIndex)
     {
-        RestartInfo info = JsonUtility.FromJson<RestartInfo>(jsonRestartInfo);
+        _multiplayerManager._spawnPoints.GetPoint(spawnIndex, out Vector3 position, out Vector3 rotation);
         StartCoroutine(Hold());
-        _player.transform.position = new Vector3(info.x, 0, info.z);
+        _player.transform.position = position;
+        rotation.x = 0;
+        rotation.z = 0;
+        _player.transform.eulerAngles = rotation;
         _player.SetInput(0, 0, 0);
 
         Dictionary<string, object> data = new Dictionary<string, object>()
         {
-            {"pX", info.x },
-            {"pY", 0 },
-            {"pZ", info.z },
+            {"pX", position.x },
+            {"pY", position.y },
+            {"pZ", position.z },
             {"vX", 0 },
             {"vY", 0 },
             {"vZ", 0 },
             {"rX", 0 },
-            {"rY", 0 }
+            {"rY", rotation.y }
         };
         _multiplayerManager.SendMessage("move", data);
     }
@@ -158,11 +175,4 @@ public struct ShootInfo
     public float dX; 
     public float dY; 
     public float dZ;
-}
-
-[System.Serializable]
-public struct RestartInfo
-{
-    public float x;
-    public float z;
 }

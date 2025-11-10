@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 3472436396563659037}
   - component: {fileID: 9062678360966424664}
   - component: {fileID: 1039436245940276204}
+  - component: {fileID: 4937984728477727460}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -77,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5efdc79662437264583b31efbb89b006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCharacter
-  <speed>k__BackingField: 2
+  <speed>k__BackingField: 6
   <maxHealth>k__BackingField: 100
   _collider: {fileID: 1399458209037449010}
   _colliderCenterCrouch: {x: 0, y: 0.6, z: 0}
@@ -190,6 +191,28 @@ MonoBehaviour:
   - {fileID: 85365794609059126}
   - {fileID: 744716633899343900}
   - {fileID: 2934363588595039378}
+--- !u!114 &4937984728477727460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265610020963487376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0d2490a9246b4046bf9572807e6bad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetSkin
+  _meshRenderers:
+  - {fileID: 2611211707587064905}
+  - {fileID: 4554489749684787331}
+  - {fileID: 6785202950372239537}
+  - {fileID: 8695084095883136209}
+  - {fileID: 5798700228188176115}
+  - {fileID: 1902658414621070699}
+  - {fileID: 9158255106342746880}
+  - {fileID: 4912896690345822333}
+  - {fileID: 8795221005391183649}
 --- !u!1 &1148107856782108248
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,6 +603,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!23 &1902658414621070699 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2717617010949376465, guid: 5b9e5150db7b2204d98b5f69a683d1e6, type: 3}
+  m_PrefabInstance: {fileID: 4598584214405242042}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2611211707587064905 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2012423814642051315, guid: 5b9e5150db7b2204d98b5f69a683d1e6, type: 3}
+  m_PrefabInstance: {fileID: 4598584214405242042}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2934363588595039378 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1687028903742005288, guid: 5b9e5150db7b2204d98b5f69a683d1e6, type: 3}
@@ -588,6 +621,26 @@ GameObject:
 --- !u!1 &3536615861114692350 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1064510435062398532, guid: 5b9e5150db7b2204d98b5f69a683d1e6, type: 3}
+  m_PrefabInstance: {fileID: 4598584214405242042}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4554489749684787331 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 64668538312934457, guid: 5b9e5150db7b2204d98b5f69a683d1e6, type: 3}
+  m_PrefabInstance: {fileID: 4598584214405242042}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4912896690345822333 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8934981647788840135, guid: 5b9e5150db7b2204d98b5f69a683d1e6, type: 3}
+  m_PrefabInstance: {fileID: 4598584214405242042}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5798700228188176115 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8045800413384286793, guid: 5b9e5150db7b2204d98b5f69a683d1e6, type: 3}
+  m_PrefabInstance: {fileID: 4598584214405242042}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6785202950372239537 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7059552776166667275, guid: 5b9e5150db7b2204d98b5f69a683d1e6, type: 3}
   m_PrefabInstance: {fileID: 4598584214405242042}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &7700424862273971719 stripped
@@ -622,6 +675,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!23 &8695084095883136209 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5150524850654449771, guid: 5b9e5150db7b2204d98b5f69a683d1e6, type: 3}
+  m_PrefabInstance: {fileID: 4598584214405242042}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8795221005391183649 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5034906861454943131, guid: 5b9e5150db7b2204d98b5f69a683d1e6, type: 3}
+  m_PrefabInstance: {fileID: 4598584214405242042}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8968818024655152282 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4874820608474953760, guid: 5b9e5150db7b2204d98b5f69a683d1e6, type: 3}
@@ -649,3 +712,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!23 &9158255106342746880 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4668503855953127354, guid: 5b9e5150db7b2204d98b5f69a683d1e6, type: 3}
+  m_PrefabInstance: {fileID: 4598584214405242042}
+  m_PrefabAsset: {fileID: 0}
